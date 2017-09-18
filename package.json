@@ -1,0 +1,27 @@
+{
+  "name": "node_demo",
+  "version": "1.0.0",
+  "description": "play with node",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nengmou/node_demo.git"
+  },
+  "keywords": [
+    "node",
+    "http"
+  ],
+  "author": "nengmou wang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nengmou/node_demo/issues"
+  },
+  "homepage": "https://github.com/Nengmou/node_demo#readme",
+  "dependencies": {
+    "node-fetch": "^1.7.3",
+    "request": "^2.81.0"
+  }
+}
