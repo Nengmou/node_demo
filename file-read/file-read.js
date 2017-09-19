@@ -16,8 +16,16 @@ function readLines(input, func) {
 readLines(input, print);
 
 //Asynchronous:
+// read
 fs.readFile('file-read/sample.txt', function(err, data) {
     if(err) throw err;
     print(data);
     console.log("====== Finished with Asynchronous call ======");
+});
+
+// write
+fs.writeFile('temp.txt', 'Hello Node.js', 'utf8', (err) => {
+	// utf8 is optional here since it is the default encoding
+  if (err) throw err;
+  console.log('The file has been saved!');
 });
