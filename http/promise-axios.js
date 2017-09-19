@@ -53,10 +53,11 @@ getJSON("Xianning").then(printCityInfo);
 
 // multiple calls with Promiss.all()
 fs.readFile('http/city-names.txt', 'utf8', function(err, response) {
-    // utf8 is optional since it is the default encoding option
     if(err) throw err;
-    const data = response.toString(); //convert buffer response to String
-    let arr = data.split('\n'); //split to lines
+    // this function use utf8 encoding.
+    // a raw buffer is returned if not specified, and the below line is needed then
+    // const data = response.toString(); //convert buffer response to String
+    let arr = response.split('\n'); //split to lines
     arr = arr.filter(line => line.length > 0); //remove empty line
     const promises = arr.map(getJSON);
     Promise.all(promises)
