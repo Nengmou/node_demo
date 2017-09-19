@@ -1,31 +1,24 @@
+const fs = require('fs');
 const axios = require("axios");
-const url =
-  "https://maps.googleapis.com/maps/api/geocode/json?address=Florence";
+const get = require("lodash/get");
+const url = "https://maps.googleapis.com/maps/api/geocode/json?address=";
 
-function getJSON(){
+function getJSON(city){
     // To make the function blocking we manually create a Promise.
-    return new Promise( function(resolve) {
-        axios.get(url)
-            .then(json => {
+    return new Promise(function(resolve) {
+        axios.get(url+city)
+        .then(json => {
                 // The data from the request is available in a .then block
                 // We return the result using resolve.
                 resolve(json);
-            });
-    });
-
+            }).catch(ex => {
+              console.log(ex);
+          });
+        });
 }
 
-// call the function
-getJSON().then( function(response) {
-    console.log(
-      `City: ${response.data.results[0].formatted_address} -`,
-      `Latitude: ${response.data.results[0].geometry.location.lat} -`,
-      `Longitude: ${response.data.results[0].geometry.location.lng}`
-    );
-});
-
 /*
-// Async/Await approach: available in ES7
+// Async/Await approach: available in ES7+
 
 // The async keyword will automatically create a new Promise and return it.
 async function getJSONAsync(){
@@ -36,3 +29,40 @@ async function getJSONAsync(){
     return json;
 }
 */
+
+// help function to process result
+function printCityInfo(response) {
+    // console.log(
+    //   `City: ${response.data.results[0].formatted_address} -`,
+    //   `Latitude: ${response.data.results[0].geometry.location.lat} -`,
+    //   `Longitude: ${response.data.results[0].geometry.location.lng}`
+    // );
+const city = get(response, "data.results[0].formatted_address", "not found");
+const latitude = get(response, "data.results[0].geometry.location.lat");
+const longitude = get(response, "data.results[0].geometry.location.lng");
+
+console.log(
+  `City: ${city} -`,
+  `Latitude: ${latitude} -`,
+  `Longitude: ${longitude}`
+  );
+}
+
+// single call with promise
+getJSON("Xianning").then(printCityInfo);
+
+// multiple calls with Promiss.all()
+fs.readFile('http/city-names.txt', 'utf8', function(err, response) {
+    // utf8 is optional since it is the default encoding option
+    if(err) throw err;
+    const data = response.toString(); //convert buffer response to String
+    let arr = data.split('\n'); //split to lines
+    arr = arr.filter(line => line.length > 0); //remove empty line
+    const promises = arr.map(getJSON);
+    Promise.all(promises)
+    .then(values => {
+      values.map(printCityInfo);
+  }).catch(ex => {
+      console.log(ex);
+  });
+});

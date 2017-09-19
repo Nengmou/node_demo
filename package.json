@@ -23,6 +23,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "fs": "0.0.1-security",
+    "lodash": "^4.17.4",
     "node-fetch": "^1.7.3",
     "request": "^2.81.0"
   }
