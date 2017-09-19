@@ -1,0 +1,12 @@
+NewYork
+London
+Boston
+
+Sunnyvale
+SanJose
+SantaClara
+Campbell
+
+Columbus
+
+CrazyCityNotExist
