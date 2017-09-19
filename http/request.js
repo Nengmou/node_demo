@@ -9,3 +9,11 @@ request.get(url, (error, response, body) => {
     `Longitude: ${json.results[0].geometry.location.lng}`
   );
 });
+
+/*
+//disable encode to get byte size
+request.get({url, encoding: null}, (error, response, body) => {
+  console.log(body);
+  console.log(body.length);
+});
+*/
